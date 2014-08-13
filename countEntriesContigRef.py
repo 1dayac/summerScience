@@ -18,7 +18,7 @@ if len(sys.argv) <= 2:
 
 align_rate = 0.95
 length_diff = 10
-
+astat = 600
 
 opts, args = getopt.getopt(sys.argv[1:], "", ["align-rate", "length-diff"])
 
@@ -27,6 +27,8 @@ for o, a in opts:
        align_rate = float(a)
    elif o == "length-diff":
        length_diff = int(a)
+   elif o == "astat":
+       astat = int(a)
 
 os.system("makeblastdb -in " + sys.argv[2] + " -dbtype nucl")
 #time.sleep(25)
@@ -68,7 +70,7 @@ with open(sys.argv[3], 'r') as astatFile:
     for line in astatFile:
 #        print(line)
         line_splited = line.split()
-        if float(line_splited[5]) > 600.0:
+        if float(line_splited[5]) > astat:
             if line_splited[0] not in result_dict or result_dict[line_splited[0]] <= 1:
                 print(line_splited[0] + " - ok - unique or missing")
                 ok_unique += 1
